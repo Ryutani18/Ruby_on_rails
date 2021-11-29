@@ -1,0 +1,9 @@
+<% if user.follower_users.include?(@current_user) %>
+  <%= link_to user_relationship_path(user), method: :delete, remote: true do %>
+    <input type="button" value="フォロー中">
+  <% end %>
+<% else %>
+  <%= link_to user_relationship_path(user), method: :post, remote: true do %>
+    <input type="button" value="フォローする">
+  <% end %>
+<% end %>

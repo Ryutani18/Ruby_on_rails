@@ -1,0 +1,3 @@
+document.getElementById('follow_<%= @user.id %>').innerHTML = '<%= j(render partial: 'relationships/follow', locals: {user: @user}) %>'
+document.getElementById('follower_count_<%= @user.id %>').innerHTML = '<%= @user.follower_users.count %>'
+document.getElementById('following_count_<%= @user.id %>').innerHTML = '<%= @user.following_users.count %>'

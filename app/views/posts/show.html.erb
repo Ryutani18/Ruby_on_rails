@@ -1,0 +1,50 @@
+<div id="main_wrapper">
+  <div class="article">
+    <div class="article_title"><%= @post.title %></div>
+    <div class="show_content">
+      <%= link_to @user do %>
+        <img src="<%= "/user_images/#{@user.image_name}" %>">
+        <p id="user"><%= @user.name %></p>
+      <% end %>
+      <p id="post-time"><%= @post.created_at %></p>
+      <p class="text_content"><%= @post.content %></p>
+      <div id="like_<%= @post.id %>">
+        <%= render partial: 'likes/like', locals: {post: @post} %>
+      </div>
+      <div class="tag">
+        <% @post.tags.each do |tag| %>
+          <%= link_to tag.tag_name, tag %>
+        <% end %>
+      </div>
+      <% if @user == @current_user %>
+        <div class="edit">
+          <%= link_to "編集", edit_post_path(@post) %>
+          <%= link_to "削除", @post, method: :delete, data: {confirm: "Are you sure?"} %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="comments">
+    <% @comment.errors.full_messages.each do |message| %>
+      <div class="form-error" style="margin-bottom: 30px;">
+        <%= message %>
+      </div>
+    <% end %>
+    <div class="comment_lists">
+      <% @comments.each do |comment| %>
+        <p><%= comment.user_name %></p>
+        <p><%= comment.created_at %></p>
+        <p><%= comment.content %></p>
+        <br>
+      <% end %>
+    </div>
+    <%= form_tag post_comment_path(@post), method: :post do %>
+      <div class="new_comment">
+        <input type="text" value="名無しのユーザー" name="user_name"><br>
+        <textarea name="content"></textarea>
+        <br>
+        <input type="submit" value="送信">
+      </div>
+    <% end %>
+  </div>
+</div>

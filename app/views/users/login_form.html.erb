@@ -1,0 +1,19 @@
+<div id="main_wrapper">
+  <h1>ログイン</h1>
+  <%= @error_message if @error_message %>
+  <%= form_tag login_path do %>
+    <div class="form-group">
+      <p><%= label_tag :email, :メールアドレス %></p>
+      <%= text_field_tag :email %>
+    </div>
+    <div class="form-group">
+      <p><%= label_tag :password, :パスワード %></p>
+      <%= password_field_tag :password %>
+    </div>
+    <%= submit_tag :ログイン %>
+  <% end %>
+  <p style="padding-top: 30px;">アカウントをお持ちでない方</p>
+  <%= link_to signup_path do %>
+    <input type="button" value="会員登録">
+  <% end %>
+</div>

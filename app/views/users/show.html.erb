@@ -1,0 +1,99 @@
+<div id="main_wrapper">
+  <div class="user-info">
+    <img src="<%= "/user_images/#{@user.image_name}" %>">
+    <h2><%= @user.name %></h2>
+    <p><%= @user.email %></p>
+    <% if @user == @current_user %>
+      <%= link_to "編集", edit_user_path(@user) %>
+    <% else %>
+      <div id="follow_<%= @user.id %>">
+        <%= render partial: 'relationships/follow', locals: {user: @user} %>
+      </div>
+    <% end %>
+    <ul class="information-lists">
+      <li>
+        <p>投稿</p>
+        <%= @posts.count %>
+      </li>
+      <li>
+        <p>フォロワー</p>
+        <a id="follower_count_<%= @user.id %>"><%= @follower_users.count %></a>
+      </li>
+      <li>
+        <p>フォロー中</p>
+        <a id="following_count_<%= @user.id %>"><%= @following_users.count %></a>
+      </li>
+    </ul>
+    <div class="tabs">
+      <input id="posts" type="radio" name="tab_item" checked>
+      <label class="tab_item" for="posts">投稿一覧</label>
+      <input id="likes" type="radio" name="tab_item">
+      <label class="tab_item" for="likes">いいね！した投稿</label>
+      <input id="followers" type="radio" name="tab_item">
+      <label class="tab_item" for="followers">フォロワー</label>
+      <input id="following_users" type="radio" name="tab_item">
+      <label class="tab_item" for="following_users">フォロー中</label>
+      <div class="tab_content" id="posts_content">
+        <div class="tab_content_description">
+          <p class="c-txtsp">
+            <% @posts.each do |post| %>    
+              <%= link_to post do %>
+                <div class="post_title"><%= post.title %></div>
+              <% end %>
+            <% end %>
+          </p>
+        </div>
+      </div>
+      <br>
+      <div class="tab_content" id="likes_content">
+        <div class="tab_content_description">
+          <p class="c-txtsp">
+            <% @likes.each do |like| %>
+              <%= link_to like.post do %>
+                <div class="post_title"><%= like.post.title %></div>
+              <% end %>
+            <% end %>
+          </p>
+        </div>
+      </div>
+      <br>
+      <div class="tab_content" id="followers_content">
+        <div class="tab_content_description">
+          <p class="c-txtsp">
+            <% @follower_users.each do |follower_user| %>
+              <div class="followed">
+                <%= link_to follower_user do %>
+                  <div class="user-name"><%= follower_user.name %></div>
+                <% end %>
+                <% if follower_user != @current_user %>
+                  <div id="follow_<%= follower_user.id %>">
+                    <%= render partial: 'relationships/follow', locals: {user: follower_user} %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </p>
+        </div>
+      </div>
+      <br>
+      <div class="tab_content" id="followings_content">
+        <div class="tab_content_description">
+          <p class="c-txtsp">
+            <% @following_users.each do |following_user| %>
+              <div class="follower">
+                <%= link_to following_user do %>
+                  <div class="user-name"><%= following_user.name %></div>
+                <% end %>
+                <% if following_user != @current_user %>
+                  <div id="follow_<%= following_user.id %>">
+                    <%= render partial: 'relationships/follow', locals: {user: following_user} %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

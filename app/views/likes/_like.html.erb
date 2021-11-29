@@ -1,0 +1,10 @@
+<% if post.liked_by?(session[:user_id]) %>
+  <%= link_to post_like_path(post), method: :delete, remote: true do %>
+    <i class="fa fa-heart like-btn"></i>
+  <% end %>
+<% else %>
+  <%= link_to post_like_path(post), method: :post, remote: true do %>
+    <i class="fa fa-heart like-btn-unlike"></i>
+  <% end %>
+<% end %>
+<%= Like.where(post_id: post.id).count %>

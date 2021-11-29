@@ -1,0 +1,7 @@
+<div id="main_wrapper">
+  <% @users.each do |user| %>
+    <div class="user-info">
+      <%= link_to user.name, user %>
+    </div>
+  <% end %>
+</div>

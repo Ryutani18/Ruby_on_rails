@@ -1,0 +1,25 @@
+<div id="main_wrapper">
+  <% @posts.each do |post| %>
+    <div class="article">
+      <%= link_to post do %>
+        <div class="article_title"><%= post.title %></div>
+      <% end %>
+      <div class="index_content">
+        <div class="show_content">
+          <%= link_to post.user do %>
+            <img src="<%= "/user_images/#{post.user.image_name}" %>">
+            <p id="user"><%= post.user.name %></p>
+          <% end %>
+          <p id="post-time"><%= post.created_at %></p>
+          <p class="text_content"><%= post.content.truncate(100) %></p>
+          <div id="like_<%= post.id %>">
+            <%= render partial: 'likes/like', locals: {post: post} %>
+          </div>
+        </div>
+        <%= link_to post do %>
+          <div class="read_button">続きを読む</div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

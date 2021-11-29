@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RubyOnRails</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= params %>
+    <% if flash[:notice] %>
+      <div class="flash">
+        <% flash.each do |f| %>
+          <%= f %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if @tags %>
+      <header>
+        <div class="header-list">
+          <ul>
+            <li><%= link_to "このwebページについて", root_path %></li>
+            <li><%= link_to "新規投稿", new_post_path %></li>
+            <li><%= link_to "投稿一覧", posts_path %></li>
+            <li><%= link_to "ユーザー一覧", users_path %></li>
+            <% if @current_user %>
+              <li><%= link_to @current_user.name, @current_user %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="header-right">
+          <% if @current_user == nil %>
+            <%= link_to "ログイン", login_path %>
+          <% else %>
+            <%= link_to "ログアウト", logout_path %>
+          <% end %>
+        </div>
+      </header>
+      <%= link_to posts_path do %>
+        <div id="picture">
+          <!-- height: 36px; -->
+          <!-- 写真 -->
+        </div>
+      <% end %>
+      <div id="wrappers">
+        <div id="left_wrapper">
+          <ul id="tags">
+            <% @tags.each do |tag| %>
+              <li><%= link_to tag.tag_name, tag %></li>
+            <% end %>
+          </ul>
+        </div>
+        <%= yield %>
+        <div id="right_wrapper">
+          <div id="profile">プロフィール</div>
+          <div id="access">アクセス数</div>
+          <div id="zayuu">座右の銘</div>
+        </div>
+      </div>
+    <% else %>
+      <%= yield %>
+    <% end %>
+  </body>
+</html>
