@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   root to: 'posts#index'
-  get 'comments/create'
   resources :users, except: [:new] do
     post 'relationship' => 'relationships#follow'
     delete 'relationship' => 'relationships#unfollow'
